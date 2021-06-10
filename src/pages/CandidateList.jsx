@@ -1,41 +1,41 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { Table, Menu, Icon, Header } from 'semantic-ui-react'
-import EmployerService from '../services/employerService'
+import CandidateService from '../services/candidateService'
+import { Menu, Table, Icon, Header } from 'semantic-ui-react'
 
-export default function EmployerList() {
+export default function CandidateList() {
 
-    const [employers, setEmployers] = useState([])
+    const [candidates, setCandidates] = useState([])
 
-    useEffect(()=>{
-        let employerService=new EmployerService()
-        employerService.getEmployers().then(result=>setEmployers(result.data.data))
+    useEffect (()=>{
+        let candidateService=new CandidateService()
+        candidateService.getCandidates().then(result=> setCandidates(result.data.data))
     },[])
+    
 
     return (
         <div>
-            <Header size='large'>Company List</Header>
+            <Header size='large'>Candidate List</Header>
             <Table celled>
             
                 <Table.Header>
                 
                     <Table.Row>
-                        <Table.HeaderCell>Firma Adı</Table.HeaderCell>
-                        <Table.HeaderCell>Web Sitesi</Table.HeaderCell>
-                        <Table.HeaderCell>E-Posta</Table.HeaderCell>
-                        <Table.HeaderCell>Telefon Numarası</Table.HeaderCell>
+                        <Table.HeaderCell>Aday Adı</Table.HeaderCell>
+                        <Table.HeaderCell>Aday Soyadı</Table.HeaderCell>
+                        <Table.HeaderCell>Aday E-Posta</Table.HeaderCell>
+                        <Table.HeaderCell>Aday Doğum Yılı</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
 
                 <Table.Body>
                     {
-                        employers.map(employer => (
+                        candidates.map(candidate => (
 
-                            <Table.Row key={employer.id}>
-                                <Table.Cell><Link to={`/employers/${employer.companyName}`}>{employer.companyName}</Link></Table.Cell>
-                                <Table.Cell>{employer.webSite}</Table.Cell>
-                                <Table.Cell>{employer.email}</Table.Cell>          
-                                <Table.Cell>{employer.phoneNumber}</Table.Cell>
+                            <Table.Row key={candidate.id}>
+                                <Table.Cell>{candidate.firstName}</Table.Cell>
+                                <Table.Cell>{candidate.lastName}</Table.Cell>
+                                <Table.Cell>{candidate.email}</Table.Cell>          
+                                <Table.Cell>{candidate.birthYear}</Table.Cell>
                             </Table.Row>
                         ))
                     }

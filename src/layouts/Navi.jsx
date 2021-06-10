@@ -1,27 +1,30 @@
-import React from 'react'
-import { Button, Container, Menu, Input } from 'semantic-ui-react'
-import CandidateLogIn from './CandidateLogIn'
-import CandidateRegister from './CandidateRegister'
-import EmployerLogIn from './EmployerLogIn'
-import EmployerRegister from './EmployerRegister'
+import React, { useState } from 'react'
+import {  Container, Menu, Input } from 'semantic-ui-react'
+import LogOut from './LogOut'
+import LogIn from './LogIn'
+import { useHistory } from 'react-router'
 
 export default function Navi() {
+
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const history = useHistory()
+
+    function handleLogOut() {
+        setIsAuthenticated(false)
+        history.push("/")
+    }
+    function handleLogIn() {
+        setIsAuthenticated(true)
+        
+    }
     return (
         <div>
-            <Menu  size='small'>
+            <Menu size='small'>
+
                 <Container>
-                    <Menu.Item>
-                        <Button primary>Employer Sign up</Button>
-                    </Menu.Item>
-
-                    <Menu.Item>
-                        <Button primary>Sign up</Button>
-                    </Menu.Item>
-
-                    <Menu.Item>
-                        <Button>Log-in</Button>
-                    </Menu.Item>
-
+                    <Menu>
+                        {isAuthenticated ? <LogIn logOut={handleLogOut} /> : <LogOut logIn={handleLogIn} />}
+                    </Menu>
                     <Menu.Menu position='right'>
                         <Menu.Item>
                             <Input icon='search' placeholder='Search...' iconPosition='left' />

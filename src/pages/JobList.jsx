@@ -1,41 +1,35 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import JobService from '../services/jobService'
 import { Table, Menu, Icon, Header } from 'semantic-ui-react'
-import EmployerService from '../services/employerService'
+import { Link } from 'react-router-dom'
 
-export default function EmployerList() {
+export default function JobList() {
 
-    const [employers, setEmployers] = useState([])
+    const [jobs, setJobs] = useState([])
 
     useEffect(()=>{
-        let employerService=new EmployerService()
-        employerService.getEmployers().then(result=>setEmployers(result.data.data))
+        let jobService = new JobService()
+        jobService.getJobs().then(result=>setJobs(result.data.data))
     },[])
 
     return (
         <div>
-            <Header size='large'>Company List</Header>
+            <Header size='large'>Job List</Header>
             <Table celled>
-            
+
                 <Table.Header>
-                
+
                     <Table.Row>
-                        <Table.HeaderCell>Firma Adı</Table.HeaderCell>
-                        <Table.HeaderCell>Web Sitesi</Table.HeaderCell>
-                        <Table.HeaderCell>E-Posta</Table.HeaderCell>
-                        <Table.HeaderCell>Telefon Numarası</Table.HeaderCell>
+                        <Table.HeaderCell>Pozisyon Adı</Table.HeaderCell>                       
                     </Table.Row>
                 </Table.Header>
 
                 <Table.Body>
                     {
-                        employers.map(employer => (
+                        jobs.map(job => (
 
-                            <Table.Row key={employer.id}>
-                                <Table.Cell><Link to={`/employers/${employer.companyName}`}>{employer.companyName}</Link></Table.Cell>
-                                <Table.Cell>{employer.webSite}</Table.Cell>
-                                <Table.Cell>{employer.email}</Table.Cell>          
-                                <Table.Cell>{employer.phoneNumber}</Table.Cell>
+                            <Table.Row key={job.id}>
+                                <Table.Cell>{job.jobTitle}</Table.Cell>
                             </Table.Row>
                         ))
                     }
@@ -44,7 +38,7 @@ export default function EmployerList() {
 
                 <Table.Footer>
                     <Table.Row>
-                        <Table.HeaderCell colSpan='4'>
+                        <Table.HeaderCell colSpan='1'>
                             <Menu floated='right' pagination>
                                 <Menu.Item as='a' icon>
                                     <Icon name='chevron left' />

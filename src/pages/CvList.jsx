@@ -1,41 +1,39 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { Table, Menu, Icon, Header } from 'semantic-ui-react'
-import EmployerService from '../services/employerService'
+import React, { useState, useEffect} from 'react'
+import { Menu, Table, Icon, Header } from 'semantic-ui-react'
+import CvService from '../services/cvService'
 
-export default function EmployerList() {
+export default function CvList() {
 
-    const [employers, setEmployers] = useState([])
 
-    useEffect(()=>{
-        let employerService=new EmployerService()
-        employerService.getEmployers().then(result=>setEmployers(result.data.data))
+    const [cvies, setCvies] = useState([])
+
+    useEffect (()=>{
+        let cvService=new CvService()
+        cvService.getCvies().then(result=> setCvies(result.data.data))
     },[])
+
 
     return (
         <div>
-            <Header size='large'>Company List</Header>
+            <Header size='large'>Cv List</Header>
             <Table celled>
             
                 <Table.Header>
                 
                     <Table.Row>
-                        <Table.HeaderCell>Firma Adı</Table.HeaderCell>
-                        <Table.HeaderCell>Web Sitesi</Table.HeaderCell>
-                        <Table.HeaderCell>E-Posta</Table.HeaderCell>
-                        <Table.HeaderCell>Telefon Numarası</Table.HeaderCell>
+                        <Table.HeaderCell>Cv Bilgileri</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
 
                 <Table.Body>
                     {
-                        employers.map(employer => (
+                        cvies.map(cv => (
 
-                            <Table.Row key={employer.id}>
-                                <Table.Cell><Link to={`/employers/${employer.companyName}`}>{employer.companyName}</Link></Table.Cell>
-                                <Table.Cell>{employer.webSite}</Table.Cell>
-                                <Table.Cell>{employer.email}</Table.Cell>          
-                                <Table.Cell>{employer.phoneNumber}</Table.Cell>
+                            <Table.Row key={cv.id}>
+                                <Table.Cell>{cv.firstName}</Table.Cell>
+                                <Table.Cell>{cv.lastName}</Table.Cell>
+                                <Table.Cell>{cv.email}</Table.Cell>          
+                                <Table.Cell>{cv.birthYear}</Table.Cell>
                             </Table.Row>
                         ))
                     }

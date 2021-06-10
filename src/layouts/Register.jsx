@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function EmployerRegister() {
+export default function Register() {
     return (
         <div>
             
